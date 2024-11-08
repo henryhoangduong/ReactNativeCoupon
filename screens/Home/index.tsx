@@ -1,26 +1,40 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Searchbar, Title } from "react-native-paper";
-import FoodCard from "../../components/FoodCard";
-import { ScrollView } from "react-native";
-import { TouchableWithoutFeedback } from "react-native";
+import MealType from "./MealType";
+import { TouchableOpacity } from "react-native";
+import IngredientType from "./IngredientType";
+import { NavigationProp } from "@react-navigation/native";
 
-const HomeScreen = () => {
+type HomeProps = {
+  navigation: NavigationProp<any>;
+};
+
+const steps = [
+  {
+    id: 1,
+    component: <MealType />,
+  },
+  {
+    id: 2,
+    component: <IngredientType />,
+  },
+];
+
+const HomeScreen = ({ navigation }: HomeProps) => {
+  const [step, setStep] = React.useState<number>(0);
+  const handleNext = () => {
+    if (step < steps.length - 1) {
+      setStep(step + 1);
+    } else {
+      navigation.navigate("Discover");
+    }
+  };
   return (
     <View style={[styles.root]}>
-      <Text style={[styles.title]}>What goal do you have in mind</Text>
-      <View>
-        <View style={[styles.textContainer]}>
-          <Text>Lose weight</Text>
-        </View>
-        <View>
-          <Text>Lose weight</Text>
-        </View>
-
-        <View>
-          <Text>Lose weight</Text>
-        </View>
-      </View>
+      {steps[step].component}
+      <TouchableOpacity onPress={handleNext} style={[styles.nextContainer]}>
+        <Text style={[styles.nextText]}>Next</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -31,14 +45,19 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     alignItems: "center",
-    gap: 20,
-    paddingTop: 150,
-    padding: 10,
   },
-  title: {
+  nextText: {
     fontWeight: "bold",
+    color: "white",
   },
-  textContainer: {
-    borderWidth: 2,
+  nextContainer: {
+    backgroundColor: "black",
+    width: "90%",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 70,
+    borderRadius: 50,
+    marginTop: "auto",
+    marginBottom: 15,
   },
 });

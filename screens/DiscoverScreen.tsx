@@ -1,15 +1,25 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Searchbar } from "react-native-paper";
 import FoodCard from "../components/FoodCard";
 import { ScrollView } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
-
-const DiscoverScreen = () => {
+import { LeftArrowIcon } from "../assets/icons/LeftArrowIcon";
+import { NavigationProp } from "@react-navigation/native";
+type DiscoverProps = {
+  navigation: NavigationProp<any>;
+};
+const DiscoverScreen = ({navigation}: DiscoverProps) => {
+  const handleGoBack = () => {
+    navigation.navigate("Home")
+  }
   return (
     <TouchableWithoutFeedback>
       <View style={[styles.root]}>
         <View style={[styles.searchContainer]}>
+          <TouchableOpacity onPress={handleGoBack}>
+            <LeftArrowIcon />
+          </TouchableOpacity>
           <Searchbar
             placeholder="Search your promotion....."
             placeholderTextColor={"#a6a2a2"}
@@ -48,6 +58,10 @@ const styles = StyleSheet.create({
   searchContainer: {
     width: "100%",
     paddingHorizontal: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 5,
+    gap: 10,
   },
   searchBar: {
     shadowColor: "rgba(99, 99, 99, 0.8)",
@@ -55,7 +69,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 8,
     backgroundColor: "white",
-    width: "100%",
+    flex: 1,
   },
   discoverText: {
     fontWeight: "bold",
