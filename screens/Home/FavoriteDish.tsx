@@ -2,32 +2,29 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import DinnerIcon from "../../assets/icons/DinnerIcon";
-
-const IngredientType = () => {
+const FavoriteDish = () => {
   return (
     <View style={[styles.root]}>
-      <Text style={[styles.title]}>What is your type of ingredients</Text>
+      <Text style={[styles.title]}>What is your favorite dish?</Text>
       <View style={[styles.selectContainer]}>
         <TouchableOpacity style={[styles.textContainer]}>
-          <DinnerIcon width={40} height={40} />
-          <Text style={[styles.selectText]}>Carrot</Text>
+          <DinnerIcon height={40} width={40} />
+          <Text style={[styles.selectText]}>Beef Steak</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.textContainer]}>
-          <DinnerIcon width={40} height={40} />
-
-          <Text style={[styles.selectText]}>Chickent</Text>
+          <DinnerIcon height={40} width={40} />
+          <Text style={[styles.selectText]}>Bun Bo</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.textContainer]}>
-          <DinnerIcon width={40} height={40} />
-
-          <Text style={[styles.selectText]}>Vegetable</Text>
+          <DinnerIcon height={40} width={40} />
+          <Text style={[styles.selectText]}>Cơm Chỉ</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-export default IngredientType;
+export default FavoriteDish;
 
 const styles = StyleSheet.create({
   root: {

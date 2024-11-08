@@ -9,39 +9,37 @@ import { NavigationProp } from "@react-navigation/native";
 type DiscoverProps = {
   navigation: NavigationProp<any>;
 };
-const DiscoverScreen = ({navigation}: DiscoverProps) => {
+const DiscoverScreen = ({ navigation }: DiscoverProps) => {
   const handleGoBack = () => {
-    navigation.navigate("Home")
-  }
+    navigation.navigate("Home");
+  };
   return (
-    <TouchableWithoutFeedback>
-      <View style={[styles.root]}>
-        <View style={[styles.searchContainer]}>
-          <TouchableOpacity onPress={handleGoBack}>
-            <LeftArrowIcon />
-          </TouchableOpacity>
-          <Searchbar
-            placeholder="Search your promotion....."
-            placeholderTextColor={"#a6a2a2"}
-            value=""
-            style={[styles.searchBar]}
-          />
-        </View>
-        <View style={[styles.discoverContainer]}>
-          <Text style={[styles.discoverText]}>Discover</Text>
-        </View>
-        <ScrollView
-          style={{ width: "103%" }}
-          contentContainerStyle={styles.container}
-        >
-          <FoodCard />
-          <FoodCard />
-          <FoodCard />
-          <FoodCard />
-          <View style={[{ height: 200 }]}></View>
-        </ScrollView>
+    <View style={[styles.root]}>
+      <View style={[styles.searchContainer]}>
+        <TouchableOpacity onPress={handleGoBack}>
+          <LeftArrowIcon color="#BB2233" />
+        </TouchableOpacity>
+        <Searchbar
+          placeholder="Search your promotion....."
+          placeholderTextColor={"#a6a2a2"}
+          value=""
+          style={[styles.searchBar]}
+        />
       </View>
-    </TouchableWithoutFeedback>
+      <View style={[styles.discoverContainer]}>
+        <Text style={[styles.discoverText]}>Discover</Text>
+      </View>
+      <ScrollView
+        style={{ width: "103%" }}
+        contentContainerStyle={styles.container}
+      >
+        <FoodCard />
+        <FoodCard />
+        <FoodCard />
+        <FoodCard />
+        <View style={[{ height: 80 }]}></View>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -83,6 +81,7 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingVertical: 10, // Add padding at the top and bottom
-    gap: 10, // Add gap between each FoodCard
+    gap: 10, // Add gap between each FoodCard,
+    alignItems: "center",
   },
 });
