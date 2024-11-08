@@ -5,38 +5,37 @@ import FoodCard from "../components/FoodCard";
 import { ScrollView } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
 
-const HomeScreen = () => {
+const DiscoverScreen = () => {
   return (
     <TouchableWithoutFeedback>
-          <View style={[styles.root]}>
-      <View style={[styles.searchContainer]}>
-        <Searchbar
-          placeholder="Search your promotion....."
-          placeholderTextColor={"#a6a2a2"}
-          value=""
-          style={[styles.searchBar]}
-        />
-      </View>
-      <View style={[styles.discoverContainer]}>
-        <Text style={[styles.discoverText]}>Discover</Text>
-      </View>
-      <ScrollView
-        style={{ width: "103%" }}
-        contentContainerStyle={styles.container}
-      >
-        <FoodCard />
-        <FoodCard />
-        <FoodCard />
+      <View style={[styles.root]}>
+        <View style={[styles.searchContainer]}>
+          <Searchbar
+            placeholder="Search your promotion....."
+            placeholderTextColor={"#a6a2a2"}
+            value=""
+            style={[styles.searchBar]}
+          />
+        </View>
+        <View style={[styles.discoverContainer]}>
+          <Text style={[styles.discoverText]}>Discover</Text>
+        </View>
+        <ScrollView
+          style={{ width: "103%" }}
+          contentContainerStyle={styles.container}
+        >
           <FoodCard />
-          <View style={[{height:200}]}></View>
-      </ScrollView>
-    </View>
+          <FoodCard />
+          <FoodCard />
+          <FoodCard />
+          <View style={[{ height: 200 }]}></View>
+        </ScrollView>
+      </View>
     </TouchableWithoutFeedback>
-
   );
 };
 
-export default HomeScreen;
+export default DiscoverScreen;
 
 const styles = StyleSheet.create({
   root: {

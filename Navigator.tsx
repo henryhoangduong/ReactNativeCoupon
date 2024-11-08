@@ -1,11 +1,12 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "./screens/HomeScreen";
+import HomeScreen from "./screens/Home";
 import { View } from "react-native";
 import HomeIcon from "./assets/icons/HomeIcon";
 import { AccountIcon } from "./assets/icons/AccountIcon";
 import ProfileScreen from "./screens/ProfileScreen";
 import CartIcon from "./assets/icons/CartIcon";
+import DiscoverScreen from "./screens/DiscoverScreen";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -48,6 +49,7 @@ const TabNavigator = () => {
         name="Home"
         component={HomeScreen}
         options={{
+          tabBarStyle: { display: "none" },
           headerShown: false,
           tabBarIcon: ({ focused, color, size }) => (
             <View style={{ top: "50%" }}>
@@ -75,8 +77,8 @@ const TabNavigator = () => {
           ),
           tabBarLabel: () => null,
         }}
-        name="Promotion"
-        component={ProfileScreen}
+        name="Discover"
+        component={DiscoverScreen}
       />
       <Tab.Screen
         options={{
