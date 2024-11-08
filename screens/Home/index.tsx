@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import MealType from "./MealType";
 import { TouchableOpacity } from "react-native";
 import IngredientType from "./IngredientType";
@@ -26,6 +26,7 @@ const HomeScreen = ({ navigation }: HomeProps) => {
     if (step < steps.length - 1) {
       setStep(step + 1);
     } else {
+      setStep(0)
       navigation.navigate("Discover");
     }
   };
