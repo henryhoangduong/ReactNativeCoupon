@@ -7,6 +7,8 @@ import { AccountIcon } from "./assets/icons/AccountIcon";
 import ProfileScreen from "./screens/ProfileScreen";
 import CartIcon from "./assets/icons/CartIcon";
 import DiscoverScreen from "./screens/DiscoverScreen";
+import MealType from "./screens/Home/MealType";
+import { IngredientTypes } from "./screens/Home/IngredientTypes";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -16,6 +18,16 @@ export const StackNavigator = () => {
       <Stack.Screen
         name="HomeTab"
         component={TabNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MealType"
+        component={MealType}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="IngredientTypes"
+        component={IngredientTypes}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
