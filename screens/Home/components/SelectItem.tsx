@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 export const SelectItem = ({
   icon,
   title,

@@ -1,14 +1,19 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "./screens/Home";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View } from "react-native";
-import HomeIcon from "./assets/icons/HomeIcon";
+
 import { AccountIcon } from "./assets/icons/AccountIcon";
-import ProfileScreen from "./screens/ProfileScreen";
 import CartIcon from "./assets/icons/CartIcon";
+import HomeIcon from "./assets/icons/HomeIcon";
 import DiscoverScreen from "./screens/DiscoverScreen";
-import MealType from "./screens/Home/MealType";
+import HomeScreen from "./screens/Home";
+import FavoriteDish from "./screens/Home/FavoriteDish";
+import FavoriteIngredients from "./screens/Home/FavoriteIngredients";
 import { IngredientTypes } from "./screens/Home/IngredientTypes";
+import MealType from "./screens/Home/MealType";
+import ProfileScreen from "./screens/ProfileScreen";
+import SelectIngredients from "./screens/SelectIngredients";
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -28,6 +33,21 @@ export const StackNavigator = () => {
       <Stack.Screen
         name="IngredientTypes"
         component={IngredientTypes}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="FavoriteDish"
+        component={FavoriteDish}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="FavoriteIngredients"
+        component={FavoriteIngredients}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SelectIngredients"
+        component={SelectIngredients}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

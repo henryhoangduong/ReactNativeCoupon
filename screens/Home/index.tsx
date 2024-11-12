@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { TouchableOpacity } from "react-native";
 import { NavigationProp } from "@react-navigation/native";
+import { StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { ImageBackground } from "react-native";
-import { Meal1 } from "../../assets/icons/Meal1";
+
 import { FavoriteIcon } from "../../assets/icons/FavoriteIcon";
 import { HealthyFoodIcon } from "../../assets/icons/HealthyFoodIcon";
+import { Meal1 } from "../../assets/icons/Meal1";
+
 import { SelectItem } from "./components/SelectItem";
 type HomeProps = {
   navigation: NavigationProp<any>;
@@ -29,7 +31,7 @@ const HomeScreen = ({ navigation }: HomeProps) => {
       >
         <View style={[styles.overlay]}></View>
         <View style={[styles.container]}>
-          <Text style={[styles.title]}>What is your plates?</Text>
+          <Text style={[styles.title]}>What's on your plates?</Text>
           <View style={[styles.mainContainer]}>
             <View style={[styles.selectFirstRowContainer]}>
               <SelectItem
@@ -50,13 +52,13 @@ const HomeScreen = ({ navigation }: HomeProps) => {
                 title={"Favorite dish"}
                 icon={<FavoriteIcon height={70} width={70} />}
                 handlePress={handleSelect}
-                screen="Home"
+                screen="FavoriteDish"
               />
               <SelectItem
                 title={"Favorite ingredients"}
                 icon={<HealthyFoodIcon height={70} width={70} />}
                 handlePress={handleSelect}
-                screen="Home"
+                screen="FavoriteIngredients"
               />
             </View>
           </View>

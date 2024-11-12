@@ -1,15 +1,16 @@
-import { View, Text, Switch } from "react-native";
+import { useState } from "react";
+import { Switch, Text, View } from "react-native";
 import { StyleSheet } from "react-native";
 import { Avatar } from "react-native-paper";
-import StoreIcon from "../assets/icons/StoreIcon";
 import { Button, Divider } from "react-native-paper";
-import { useState } from "react";
+
 import ArrowIcon from "../assets/icons/ArrowIcon";
-import SupportIcon from "../assets/icons/SupportIcon";
+import { FaceIcon } from "../assets/icons/FaceIcon";
 import LogOutIcon from "../assets/icons/LogoutIcon";
 import { NotificationIcon } from "../assets/icons/NotificationIcon";
-import { FaceIcon } from "../assets/icons/FaceIcon";
 import { PinCodeIcon } from "../assets/icons/PinCode";
+import StoreIcon from "../assets/icons/StoreIcon";
+import SupportIcon from "../assets/icons/SupportIcon";
 
 const ProfileScreen = () => {
   const [isEnabled, setIsEnabled] = useState(true);

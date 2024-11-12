@@ -1,11 +1,16 @@
 import React from "react";
 import { NavigationProp } from "@react-navigation/native";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { ImageBackground } from "react-native";
+import {
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import { LeftArrowIcon } from "../../assets/icons/LeftArrowIcon";
 
 import DropdownComponent from "./components/DropDown";
+type FavoriteDishProps = { navigation: NavigationProp<any> };
 
 const data = [
   { label: "Item 1", value: "1" },
@@ -18,10 +23,7 @@ const data = [
   { label: "Item 8", value: "8" },
 ];
 
-type IngredientTypesProps = {
-  navigation: NavigationProp<any>;
-};
-export const IngredientTypes = ({ navigation }: IngredientTypesProps) => {
+const FavoriteDish = ({ navigation }: FavoriteDishProps) => {
   const goBack = () => {
     navigation.navigate("Home");
   };
@@ -53,7 +55,10 @@ export const IngredientTypes = ({ navigation }: IngredientTypesProps) => {
             <LeftArrowIcon color={"white"} />
           </TouchableOpacity>
           <View style={{ width: "100%" }}>
-            <DropdownComponent data={data} title={"Pick your ingredients"} />
+            <DropdownComponent
+              data={data}
+              title={"Pick your favorite dishess"}
+            />
           </View>
         </View>
       </ImageBackground>
@@ -61,12 +66,11 @@ export const IngredientTypes = ({ navigation }: IngredientTypesProps) => {
   );
 };
 
+export default FavoriteDish;
+
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
   },
   backgroundImage: {
     flex: 1,
@@ -75,5 +79,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 80,
     paddingBottom: 30,
+    borderWidth: 3,
   },
 });

@@ -7,6 +7,10 @@ import { LeftArrowIcon } from "../../assets/icons/LeftArrowIcon";
 
 import DropdownComponent from "./components/DropDown";
 
+type FavoriteIngredientsProps = {
+  navigation: NavigationProp<any>;
+};
+
 const data = [
   { label: "Item 1", value: "1" },
   { label: "Item 2", value: "2" },
@@ -18,10 +22,7 @@ const data = [
   { label: "Item 8", value: "8" },
 ];
 
-type IngredientTypesProps = {
-  navigation: NavigationProp<any>;
-};
-export const IngredientTypes = ({ navigation }: IngredientTypesProps) => {
+const FavoriteIngredients = ({ navigation }: FavoriteIngredientsProps) => {
   const goBack = () => {
     navigation.navigate("Home");
   };
@@ -53,7 +54,10 @@ export const IngredientTypes = ({ navigation }: IngredientTypesProps) => {
             <LeftArrowIcon color={"white"} />
           </TouchableOpacity>
           <View style={{ width: "100%" }}>
-            <DropdownComponent data={data} title={"Pick your ingredients"} />
+            <DropdownComponent
+              data={data}
+              title={"Pick your favorite ingredients"}
+            />
           </View>
         </View>
       </ImageBackground>
@@ -61,6 +65,7 @@ export const IngredientTypes = ({ navigation }: IngredientTypesProps) => {
   );
 };
 
+export default FavoriteIngredients;
 const styles = StyleSheet.create({
   root: {
     flex: 1,
