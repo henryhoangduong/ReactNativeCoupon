@@ -1,4 +1,5 @@
 import React from "react";
+import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Image } from "react-native";
 
@@ -13,6 +14,9 @@ const FoodCard = ({ recipe, handlePress }: FoodCardProps) => {
   return (
     <TouchableOpacity onPress={handlePress} style={[styles.root]}>
       <View style={[styles.imageContainer]}>
+        <TouchableOpacity style={[styles.iconContainer]}>
+          <AntDesign name="heart" style={{ color: "#BB2233" }} size={20} />
+        </TouchableOpacity>
         <Image
           style={[styles.image]}
           source={{
@@ -39,22 +43,33 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "white",
     width: "45%",
-    padding: 2,
+    padding: 6,
+    paddingTop: 0,
     gap: 10,
     alignItems: "center",
     justifyContent: "center",
+    overflow: "hidden",
   },
   imageContainer: {},
   image: {
     height: 130,
-    width: 160,
-    borderRadius: 10,
+    width: 180,
   },
   textContainer: {
     flex: 1,
     gap: 5,
     justifyContent: "flex-start",
     padding: 5,
+    width: "100%",
   },
   foodName: { fontSize: 16, fontWeight: "bold" },
+  iconContainer: {
+    backgroundColor: "white",
+    position: "absolute",
+    zIndex: 10,
+    padding: 5,
+    borderRadius: 15,
+    right: 7,
+    top: 3,
+  },
 });

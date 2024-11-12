@@ -5,6 +5,7 @@ import { View } from "react-native";
 import { AccountIcon } from "./assets/icons/AccountIcon";
 import CartIcon from "./assets/icons/CartIcon";
 import HomeIcon from "./assets/icons/HomeIcon";
+import { useLayout } from "./context/layoutContext";
 import DiscoverScreen from "./screens/DiscoverScreen";
 import HomeScreen from "./screens/Home";
 import FavoriteDish from "./screens/Home/FavoriteDish";
@@ -13,7 +14,6 @@ import { IngredientTypes } from "./screens/Home/IngredientTypes";
 import MealType from "./screens/Home/MealType";
 import ProfileScreen from "./screens/ProfileScreen";
 import SelectIngredients from "./screens/SelectIngredients";
-
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -55,13 +55,15 @@ export const StackNavigator = () => {
 };
 
 const TabNavigator = () => {
+  const { isbottomBarShow } = useLayout();
+
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
           position: "absolute",
           backgroundColor: "white",
-          bottom: 20,
+          bottom: isbottomBarShow ? 20 : -100,
           left: 15,
           right: 15,
           elevation: 0,

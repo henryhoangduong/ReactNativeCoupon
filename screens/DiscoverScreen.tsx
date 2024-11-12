@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useRef, useState } from "react";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { NavigationProp } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native";
@@ -12,6 +13,7 @@ import { ActivityIndicator } from "react-native-paper";
 import { LeftArrowIcon } from "../assets/icons/LeftArrowIcon";
 import BottomSheetComponent from "../components/BottomSheet";
 import FoodCard from "../components/FoodCard";
+import { useLayout } from "../context/layoutContext";
 import { Recipe } from "../types/types";
 
 type DiscoverProps = {
@@ -26,6 +28,8 @@ const DiscoverScreen = ({ navigation, data }: DiscoverProps) => {
   const [selectedItem, setSelectedItem] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState(true);
   const [isSheetVisible, setIsSheetVisible] = useState(false);
+  const { toggleBottomBar } = useLayout();
+
   const [recipeList, setRecipeList] = useState<Recipe[]>([
     {
       name: "Macaroni Salad",
@@ -43,40 +47,49 @@ const DiscoverScreen = ({ navigation, data }: DiscoverProps) => {
     },
   ]);
 
-  useEffect(() => {
-    console.log("DiscoverScreen");
-
-    const fectchData = async () => {
-      try {
-        console.log("Calling");
-
-        const response = await axios.post(
-          "https://flipp-a0055ebbf2ef.herokuapp.com/task/recipe/?meal=lunch",
-          [
-            {
-              ingredient_id: 12,
-              ingredient_image:
-                "https://img.freepik.com/premium-photo/pasta-food-4k-images-download_555090-52786.jpg",
-              ingredient_name: "Pasta",
-              meal_id: 1,
-              meal_name: "lunch",
-              ingredient_form_name: "Spaghetti",
-            },
-          ],
-        );
-        console.log("response.data: ", response.data);
-        setRecipeList(response.data.recipes);
-        setLoading(false);
-        console.log("Done");
-      } catch (e) {
-        console.log("error: ", e);
-      }
-    };
-
-    if (data === undefined) {
-      fectchData();
+  // Fetch data function
+  const fetchData = async () => {
+    setLoading(true); // Set loading to true when the fetch starts
+    try {
+      const response = await axios.post(
+        "https://flipp-a0055ebbf2ef.herokuapp.com/task/recipe/?meal=lunch",
+        [
+          {
+            ingredient_name: "Beef",
+            ingredient_id: 11,
+            ingredient_image:
+              "https://www.billyparisi.com/wp-content/uploads/2023/07/homemade-ground-beef-1.jpg",
+            meal_name: "lunch",
+            meal_id: 1,
+            ingredient_form_name: "Ground Beef",
+          },
+          {
+            ingredient_name: "Fruit",
+            ingredient_id: 55,
+            ingredient_image:
+              "https://media.istockphoto.com/id/164142758/photo/single-pear.jpg?s=612x612&w=0&k=20&c=bTXnXhqVLSsAqX6UVdNuhuXS_U3XvHwZ1NpIgl95S6c=",
+            meal_name: "lunch",
+            meal_id: 1,
+            ingredient_form_name: "Pear",
+          },
+        ],
+      );
+      setRecipeList(response.data.recipes);
+      setLoading(false); // Stop loading when done
+    } catch (e) {
+      console.log("Error: ", e);
+      setLoading(false);
     }
-  }, []);
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log("DiscoverScreen Focused");
+      if (data === undefined) {
+        fetchData();
+      }
+    }, []),
+  );
 
   const chunkArray = (array: any[], size: number) => {
     const result: any[] = [];
@@ -88,23 +101,26 @@ const DiscoverScreen = ({ navigation, data }: DiscoverProps) => {
 
   const rows = chunkArray(recipeList, 2);
   const handlePress = (item: Recipe) => {
-    bottomSheetRef.current?.expand();
+    toggleBottomBar();
     setSelectedItem(item);
+    bottomSheetRef.current?.expand();
     setIsSheetVisible(true);
   };
-  const handleCloseSheet = () => {
-    setIsSheetVisible(false);
-  };
+
   const handleSheetChange = (index: number) => {
     if (index === -1) {
       setIsSheetVisible(false); // Close the bottom sheet if it is collapsed (swiped down)
+      toggleBottomBar();
     }
   };
 
   return (
     <GestureHandlerRootView style={[styles.root]}>
       <View style={[styles.searchContainer]}>
-        <TouchableOpacity onPress={handleGoBack}>
+        <TouchableOpacity
+          style={[styles.leftArrowContainer]}
+          onPress={handleGoBack}
+        >
           <LeftArrowIcon color="#BB2233" />
         </TouchableOpacity>
         <Searchbar
@@ -146,7 +162,6 @@ const DiscoverScreen = ({ navigation, data }: DiscoverProps) => {
         <BottomSheetComponent
           recipe={selectedItem}
           handleSheetChange={handleSheetChange}
-          handleCloseSheet={handleCloseSheet}
         />
       )}
     </GestureHandlerRootView>
@@ -162,6 +177,14 @@ const styles = StyleSheet.create({
     gap: 20,
     paddingTop: 70,
     padding: 10,
+  },
+  leftArrowContainer: {
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 22,
+    shadowColor: "rgba(99, 99, 99, 0.8)",
+    shadowOffset: { width: 100, height: 2 },
+    shadowOpacity: 0.2,
   },
   searchContainer: {
     width: "100%",

@@ -4,52 +4,38 @@ import { useEffect, useState } from "react";
 import { BottomSheetView } from "@gorhom/bottom-sheet";
 import BottomSheet from "@gorhom/bottom-sheet";
 import axios from "axios";
-import { Divide } from "lucide-react";
-import {
-  Image,
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  View,
-} from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { ActivityIndicator } from "react-native-paper";
 
-import { Recipe } from "../types/types";
+import { Ingredient, Recipe } from "../types/types";
 
-type Ingredients = {};
+import IngredientContainer from "./IngredientContainer";
 
 type Props = {
-  handleCloseSheet: () => void;
   handleSheetChange: (index: number) => void;
   recipe: Recipe | null;
 };
 
-const BottomSheetComponent = ({
-  handleCloseSheet,
-  handleSheetChange,
-  recipe,
-}: Props) => {
-  const { width } = useWindowDimensions();
-  const [loading, setLoading] = useState(false);
+const BottomSheetComponent = ({ handleSheetChange, recipe }: Props) => {
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
-
   useEffect(() => {
-    console.log("loading");
     const fectchData = async () => {
       try {
-        console.log("trying......");
         const response = await axios.post(
-          "https://flipp-a0055ebbf2ef.herokuapp.com/task/recipe/details/v2/?num=4",
+          "https://flipp-a0055ebbf2ef.herokuapp.com/task/recipe/details/v2?num=4",
           recipe,
         );
-        console.log("done");
         setData(response.data);
-        console.log("data.result: ", data.result);
+        setLoading(false);
       } catch (e) {
         console.log("error: ", e);
       }
     };
     fectchData();
+    return () => {};
   }, []);
 
   return (
@@ -61,54 +47,61 @@ const BottomSheetComponent = ({
     >
       <BottomSheetView style={styles.contentContainer}>
         {loading ? (
-          <Text>loading.....</Text>
+          <ActivityIndicator color="#BB2233" />
         ) : (
-          <View style={[styles.root]}>
-            <View style={[styles.imageNameContainer]}>
-              <Image style={[styles.image]} source={{ uri: recipe?.image }} />
-              <View style={[styles.namePriceContainer]}>
-                <Text
-                  numberOfLines={3}
-                  ellipsizeMode="tail"
-                  style={[styles.recipeName]}
-                >
-                  {recipe?.name}{" "}
-                </Text>
-                <View style={[styles.PriceContainer]}>
-                  <Text style={[styles.currentPrice]}>
-                    ${data?.current_price}
+          <>
+            <View style={[styles.root]}>
+              <View style={[styles.imageNameContainer]}>
+                <Image style={[styles.image]} source={{ uri: recipe?.image }} />
+                <View style={[styles.namePriceContainer]}>
+                  <Text
+                    numberOfLines={3}
+                    ellipsizeMode="tail"
+                    style={[styles.recipeName]}
+                  >
+                    {recipe?.name}{" "}
                   </Text>
-                  <View
-                    style={{
-                      width: 55,
-                      height: 1,
-                      borderWidth: 0.7,
-                      borderColor: "gray",
-                      position: "absolute",
-                      left: 80,
-                    }}
-                  />
-                  <Text style={[styles.originalPrice]}>
-                    ${data?.original_price}
-                  </Text>
+                  <View style={[styles.PriceContainer]}>
+                    <Text style={[styles.currentPrice]}>
+                      ${data?.current_price}
+                    </Text>
+                    <View style={{ position: "relative" }}>
+                      <View
+                        style={{
+                          width: "100%",
+                          height: 1,
+                          backgroundColor: "gray",
+                          left: 0,
+                          top: "30%",
+                        }}
+                      />
+                      <Text style={[styles.originalPrice]}>
+                        ${data?.original_price}
+                      </Text>
+                    </View>
+                  </View>
                 </View>
               </View>
-            </View>
-            <View style={[styles.instructionContainer]}>
-              <Text style={[styles.instructionText]}>
-                {" "}
-                {recipe?.instructions}{" "}
-              </Text>
-            </View>
-            <View style={[styles.ingredientsContainer]}>
-              <Text style={[styles.ingredientTitle]}>Ingredients</Text>
-              <View style={[styles.ingredientsItemContainer]}>
-                {/* {data?.result.map((item: any, index: number) => {
-                  return <Text> {item?.ingredient_form_name} </Text>;
-                })} */}
+              <View style={[styles.instructionContainer]}>
+                <Text style={[styles.instructionText]}>
+                  {recipe?.instructions.slice(1)}
+                </Text>
+              </View>
+              <View style={[styles.ingredientsContainer]}>
+                <Text style={[styles.ingredientTitle]}>Ingredients</Text>
+                <ScrollView style={[styles.ingredientsListContainer]}>
+                  {data?.result.map((item: Ingredient, index: number) => {
+                    return (
+                      <IngredientContainer key={index} ingredient={item} />
+                    );
+                  })}
+                </ScrollView>
               </View>
             </View>
-          </View>
+            <TouchableOpacity style={[styles.orderContainer]}>
+              <Text style={[styles.orderText]}>Order!</Text>
+            </TouchableOpacity>
+          </>
         )}
       </BottomSheetView>
     </BottomSheet>
@@ -151,7 +144,7 @@ const styles = StyleSheet.create({
   namePriceContainer: { flex: 1, justifyContent: "center" },
   instructionContainer: {
     borderLeftWidth: 2,
-    padding: 5,
+    paddingHorizontal: 5,
     borderColor: "#BB2233",
     marginTop: 20,
   },
@@ -179,8 +172,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
   },
-  ingredientsItemContainer: {
+  ingredientsListContainer: {
     width: "100%",
     marginTop: 15,
+    gap: 10,
+    height: "35%",
+  },
+  orderContainer: {
+    backgroundColor: "#BB2233",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 70,
+    borderRadius: 50,
+    marginTop: "auto",
+    marginBottom: 15,
+    width: 300,
+  },
+  orderText: {
+    fontWeight: "bold",
+    color: "white",
   },
 });
